@@ -1,14 +1,28 @@
-import { Controller, Get, Param, Patch, Post, Delete, Body } from '@nestjs/common'
-import { CreateFileDto } from './dtos/create-file.dto'
-import { UpdateFileDto } from './dtos/update-file.dto'
+import { Controller, Get, Param, Patch, Post, Delete, Body, Query } from '@nestjs/common'
+import { CreateFileDto } from '../dtos/create-file.dto'
+import { ListQueryDto } from '../dtos/list-query.dto'
+import { UpdateFileDto } from '../dtos/update-file.dto'
 import { FileService } from './file.service'
 
 @Controller('files')
 export class FileController {
     constructor(private fileService: FileService) {}
     @Get()
-    getFileList() {
-        return this.fileService.getList()
+    getFileList(@Query() query: ListQueryDto) {
+        const { skip, take, folderId, searchString, orderBy, order } = query
+        return this.fileService.getList({
+            skip,
+            take,
+            orderBy: {
+                [orderBy]: order
+            },
+            where: {
+                folderId,
+                name: {
+                    startsWith: searchString
+                }
+            }
+        })
     }
 
     @Get(':id')

@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common'
-
-import { CreateFolderDto } from './dtos/create-folder.dto'
-import { UpdateFolderDto } from './dtos/update-folder.dto'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
+import { CreateFolderDto } from '../dtos/create-folder.dto'
+import { ListQueryDto } from '../dtos/list-query.dto'
+import { UpdateFolderDto } from '../dtos/update-folder.dto'
 import { FolderService } from './folder.service'
 
 @Controller('folders')
@@ -9,8 +9,21 @@ export class FolderController {
     constructor(private folderService: FolderService) {}
 
     @Get()
-    getFolderList() {
-        return this.folderService.getList()
+    getFolderList(@Query() query: ListQueryDto) {
+        const { skip, take, folderId, searchString, orderBy, order } = query
+        return this.folderService.getList({
+            skip,
+            take,
+            orderBy: {
+                [orderBy]: order
+            },
+            where: {
+                parentId: folderId,
+                name: {
+                    startsWith: searchString
+                }
+            }
+        })
     }
 
     @Get(':id')
