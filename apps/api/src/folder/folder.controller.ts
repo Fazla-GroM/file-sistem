@@ -1,9 +1,11 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common'
+import { ApiTags } from '@nestjs/swagger'
 import { CreateFolderDto } from '../dtos/create-folder.dto'
 import { ListQueryDto } from '../dtos/list-query.dto'
 import { UpdateFolderDto } from '../dtos/update-folder.dto'
 import { FolderService } from './folder.service'
 
+@ApiTags('Folders')
 @Controller('folders')
 export class FolderController {
     constructor(private folderService: FolderService) {}
