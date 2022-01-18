@@ -1,35 +1,23 @@
-
-
 # FileManager
+
+-   [FileManager](#filemanager)
+    -   [Generate an application](#generate-an-application)
+    -   [Generate a library](#generate-a-library)
+    -   [Development server](#development-server)
+    -   [Code scaffolding](#code-scaffolding)
+    -   [Build](#build)
+    -   [Running unit tests](#running-unit-tests)
+    -   [Running end-to-end tests](#running-end-to-end-tests)
+    -   [Understand your workspace](#understand-your-workspace)
+    -   [Further help](#further-help)
+    -   [How to deploy](#how-to-deploy)
+    -   [TLDR](#tldr)
 
 This project was generated using [Nx](https://nx.dev).
 
 <p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="450"></p>
 
 🔎 **Smart, Fast and Extensible Build System**
-
-## Adding capabilities to your workspace
-
-Nx supports many plugins which add capabilities for developing different types of applications and different tools.
-
-These capabilities include generating applications, libraries, etc as well as the devtools to test, and build projects as well.
-
-Below are our core plugins:
-
-- [React](https://reactjs.org)
-  - `npm install --save-dev @nrwl/react`
-- Web (no framework frontends)
-  - `npm install --save-dev @nrwl/web`
-- [Angular](https://angular.io)
-  - `npm install --save-dev @nrwl/angular`
-- [Nest](https://nestjs.com)
-  - `npm install --save-dev @nrwl/nest`
-- [Express](https://expressjs.com)
-  - `npm install --save-dev @nrwl/express`
-- [Node](https://nodejs.org)
-  - `npm install --save-dev @nrwl/node`
-
-There are also many [community plugins](https://nx.dev/community) you could add.
 
 ## Generate an application
 
@@ -49,7 +37,7 @@ Libraries are shareable across libraries and applications. They can be imported 
 
 ## Development server
 
-Run `nx serve my-app` for a dev server. Navigate to http://localhost:4200/. The app will automatically reload if you change any of the source files.
+Run `nx serve my-app` for a dev server. Navigate to http://localhost:`API_PORT`/. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -79,16 +67,22 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
 
+## How to deploy
 
+Well there are multiple ways to deploy an application so I will pretend that im giving a guidelines to devops team.
 
-## ☁ Nx Cloud
+-   For starters this project uses [Volta](https://volta.sh/) as tool manager to handle node/npm version so it should be installed first
+    via `curl https://get.volta.sh | bash`
+-   Node and NPM versions are pinned in root `package.json` file and afer Volta is installed it automatically sets pinned versions in workspace.
+-   With volta installed its time to install our `dependencies` via `npm install` .
+-   Before running `build` command we shuld provide a valid `.env` file
+-   After installation and with help of `Nx` we can build and test only affected parts of codebase via `npx nx affected --target=build` and `npx nx affected --target=test` commands.
+-   For production build we use `npx nx build --prod` command
+-   build output is located in `dist/apps/api` folder
+-   after build is complete we run db migrations with `npx prisma migrate deploy` command
+-   to start a built application we can run `main.js` file located in `dist/apps/api` folder either via `node` or u can use `pm2` process manager
 
-### Distributed Computation Caching & Distributed Task Execution
+## TLDR
 
-<p style="text-align: center;"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-cloud-card.png"></p>
-
-Nx Cloud pairs with Nx in order to enable you to build and test code more rapidly, by up to 10 times. Even teams that are new to Nx can connect to Nx Cloud and start saving time instantly.
-
-Teams using Nx gain the advantage of building full-stack applications with their preferred framework alongside Nx’s advanced code generation and project dependency graph, plus a unified experience for both frontend and backend developers.
-
-Visit [Nx Cloud](https://nx.app/) to learn more.
+-   this was very interesting thing to build. Especially if u try to dig deeper and explore design systems of google drive, dropbox, cloudinary,etc.. [one of iteresting articles I`ve read](https://chainerweb.com/design-dropbox/)
+-
