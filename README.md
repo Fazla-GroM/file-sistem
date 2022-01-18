@@ -10,8 +10,12 @@
     -   [Running end-to-end tests](#running-end-to-end-tests)
     -   [Understand your workspace](#understand-your-workspace)
     -   [Further help](#further-help)
-    -   [How to deploy](#how-to-deploy)
+    -   [How to start project](#how-to-start-project)
+    -   [Api docs](#api-docs)
+    -   [How to deploy](#how-to-deploy)   
     -   [TLDR](#tldr)
+
+
 
 This project was generated using [Nx](https://nx.dev).
 
@@ -67,6 +71,16 @@ Run `nx dep-graph` to see a diagram of the dependencies of your projects.
 
 Visit the [Nx Documentation](https://nx.dev) to learn more.
 
+## How to start project
+-   install volta  via `curl https://get.volta.sh | bash`
+-   have docker installed and started
+-   run `npm install`
+-   have valid `.env` file (you can use example env)
+-   run `npm run dev:api`
+
+## Api docs
+-   docs are located `/api/docs`endpoint
+
 ## How to deploy
 
 Well there are multiple ways to deploy an application so I will pretend that im giving a guidelines to devops team.
@@ -78,6 +92,7 @@ Well there are multiple ways to deploy an application so I will pretend that im 
 -   Before running `build` command we shuld provide a valid `.env` file
 -   After installation and with help of `Nx` we can build and test only affected parts of codebase via `npx nx affected --target=build` and `npx nx affected --target=test` commands.
 -   For production build we use `npx nx build --prod` command
+-   our database is allready dockerized
 -   build output is located in `dist/apps/api` folder
 -   after build is complete we run db migrations with `npx prisma migrate deploy` command
 -   to start a built application we can run `main.js` file located in `dist/apps/api` folder either via `node` or u can use `pm2` process manager
